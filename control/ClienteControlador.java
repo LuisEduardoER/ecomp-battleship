@@ -29,21 +29,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
     public ClienteControlador(){
         
      loginJanela = new LoginWindow(this);
-    }
-
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }    
     
     
     @Override

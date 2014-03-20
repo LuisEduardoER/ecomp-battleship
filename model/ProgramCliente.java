@@ -23,10 +23,7 @@ import java.util.logging.Logger;
  * @author Ycaro_2
  */
 public class ProgramCliente {
-        private ByteArrayOutputStream byteoutput;
-        private ByteArrayInputStream byteinput;
-        private ObjectOutputStream output;//cria fluxo de entrada
-	private ObjectInputStream input;//cria fluxo de saída
+        
         private DatagramSocket clienteSocket; // socket para conectar com servidor
         private String endereco;
 	private int porta;
@@ -43,44 +40,50 @@ public void criarConexao() throws UnknownHostException, IOException{
 
 	}
 
-public  void obterStreams() throws IOException {
-		//Configura o fluxo de saída para objetos
-		output = new ObjectOutputStream(byteoutput);
-
-		//Configura o fluxo de entrada para objetos
-		input = new ObjectInputStream(byteinput);                     
-	}
-
-public void fecharConexao() throws IOException{
-		//fecha os fluxos e o socket
-		output.close();
-		input.close();
-		
-	} 
-
 public Pacote enviarMsn(Pacote mensagem) throws IOException, ClassNotFoundException{
 		
+                ByteArrayOutputStream byteoutput = new ByteArrayOutputStream();
+                ObjectOutputStream output = new ObjectOutputStream(byteoutput);
+                
                 output.writeObject(mensagem);
 		output.flush();
                 output.close();
+                
                 byte[] data = byteoutput.toByteArray();
                 
                 // create sendPacket
                 DatagramPacket sendPacket = new DatagramPacket( data, data.length, InetAddress.getByName(endereco), porta );
+                
                 clienteSocket.send(sendPacket);
                   // Aguardando servidor responder:
-		Pacote pacote = (Pacote) input.readObject(); // Ler a mensagem do servidor		
+		Pacote pacote = (Pacote) waitForPackets(); // Ler a mensagem do servidor		
 		return pacote;      
-	}
-public Pacote waitForPackets() throws ClassNotFoundException
+}
+
+public Pacote waitForPackets() throws ClassNotFoundException, IOException
    {
-   
+            byte data[] = new byte[ 100 ]; // set up packet
+            
+            DatagramPacket receivePacket = new DatagramPacket( data, data.length );
+            
+            clienteSocket.receive( receivePacket );
+            
+            
+            ByteArrayInputStream byteinput = new ByteArrayInputStream (receivePacket.getData());  
+            ObjectInputStream input = new ObjectInputStream (byteinput);  
+            Pacote pacote = (Pacote) input.readObject ();  
+            input.close();  
+            
    return pacote;  
    }
+
 public void executaClient() throws IOException, ClassNotFoundException, SocketException{
-		criarConexao();
-		obterStreams();
+		criarConexao();		
 	}
+
+    public DatagramSocket getClienteSocket() {
+        return clienteSocket;
+    }
 
 
 
