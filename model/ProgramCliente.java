@@ -72,7 +72,11 @@ public Pacote enviarMsn(Pacote mensagem) throws IOException, ClassNotFoundExcept
 		Pacote pacote = (Pacote) input.readObject(); // Ler a mensagem do servidor		
 		return pacote;      
 	}
-
+public Pacote waitForPackets() throws ClassNotFoundException
+   {
+   
+   return pacote;  
+   }
 public void executaClient() throws IOException, ClassNotFoundException, SocketException{
 		criarConexao();
 		obterStreams();
