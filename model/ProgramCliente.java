@@ -39,7 +39,10 @@ public void criarConexao() throws UnknownHostException, IOException{
 		clienteSocket = new DatagramSocket();
 
 	}
-
+public void fecharConexao() throws IOException{
+		//fecha o socket		
+		clienteSocket.close();
+	}
 public Pacote enviarMsn(Pacote mensagem) throws IOException, ClassNotFoundException{
 		
                 ByteArrayOutputStream byteoutput = new ByteArrayOutputStream();
@@ -62,19 +65,20 @@ public Pacote enviarMsn(Pacote mensagem) throws IOException, ClassNotFoundExcept
 
 public Pacote waitForPackets() throws ClassNotFoundException, IOException
    {
-            byte data[] = new byte[ 100 ]; // set up packet
+            byte data[] = new byte[ 1000 ]; // set up packet
             
             DatagramPacket receivePacket = new DatagramPacket( data, data.length );
             
             clienteSocket.receive( receivePacket );
             
             
-            ByteArrayInputStream byteinput = new ByteArrayInputStream (receivePacket.getData());  
+            ByteArrayInputStream byteinput = new ByteArrayInputStream (receivePacket.getData()); 
             ObjectInputStream input = new ObjectInputStream (byteinput);  
-            Pacote pacote = (Pacote) input.readObject ();  
-            input.close();  
+            Pacote pacoteRecebido = (Pacote) input.readObject (); 
+            input.close();        
+                
             
-   return pacote;  
+   return pacoteRecebido;  
    }
 
 public void executaClient() throws IOException, ClassNotFoundException, SocketException{

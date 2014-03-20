@@ -9,11 +9,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.MouseInputListener;
+import trunk.model.BancoDeJogadores;
+import trunk.model.Jogador;
+import trunk.model.Pacote;
+import trunk.model.ProgramCliente;
+import trunk.model.TipoPacote;
 import trunk.view.LoginWindow;
 import trunk.view.TelaCadastro;
 
@@ -25,7 +33,9 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
     
     private LoginWindow loginJanela;
     private TelaCadastro telaCadastro;
-    
+    public ProgramCliente aplicacao;
+    private BancoDeJogadores jogadores;
+    public Jogador jogador;
     public ClienteControlador(){
         
      loginJanela = new LoginWindow(this);
@@ -49,12 +59,51 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
                             if (login.equals("") || senha.equals("")) {
                                     JOptionPane.showMessageDialog(null, "Todos os campos precisam ser preenchidos");
                             }else{
-                            System.out.println("login: "+login+" senha: "+senha);
+                           //VAMOS VERIFICAR SE O CLIENTE ESTÃ� CADASTRADO NO SISTEMA PRIMEIRO
+				jogador = new Jogador(login, senha);
 
-                            loginJanela.dispose();
-                            loginJanela.getLoginCampo().setText("");
-                            loginJanela.getSenhaCampo().setText("");
-                            loginJanela.getServidorCampo().setText("");
+				//Cria um novo pacote para ser enviado par ao servidor
+				Pacote pacote = new Pacote(TipoPacote.LOGIN, jogador);
+				
+				aplicacao = new ProgramCliente(servidor, 26147);
+
+				try {
+					aplicacao.executaClient(); //Executa a aplicaÃ§Ã£o cliente 
+					Pacote resposta = aplicacao.enviarMsn(pacote);//O mÃ©todo enviarMsn envia o pacote para o servidor e retorna uma resposta
+
+					System.out.println(resposta.getTipo().toString());
+
+					// Se o a confirmaÃ§Ã£o do servidor for positiva:
+					if (resposta.getTipo() == TipoPacote.SUCESSO_LOGIN) {
+						JOptionPane.showMessageDialog(null, "Login realizado com sucesso");
+
+						HashMap<String, Object> aux = (HashMap<String, Object>) resposta.getConteudo();
+						jogadores = (BancoDeJogadores) aux.get("jogadores");
+
+
+						loginJanela.dispose();
+						loginJanela.getLoginCampo().setText("");
+						loginJanela.getSenhaCampo().setText("");
+						loginJanela.getServidorCampo().setText("");
+						                                      for (int i = 0; i < jogadores.size(); i++) {
+                                                System.out.println(jogadores.getJogador(i).getLogin());
+                                            }
+                                                
+						
+                                                //CHAMAR TELA DO JOGO new viewEcompBattleship();
+					}
+
+					// Se o usuÃ¡rio nÃ£o estiver cadastrado:
+					if (resposta.getTipo() == TipoPacote.NAO_CADASTRADO) {//Se o cliente não estiver cadastrado
+						JOptionPane.showMessageDialog(null, "Você precisa se cadastrar primeiro");
+                                        }
+
+				} catch (SocketException ex) {
+					JOptionPane.showMessageDialog(null, "Não foi possível estabelecer uma conexão com o servidor informado!", "", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					System.out.println("Problema com a requisição de Login -- Classe ClienteControlador");
+					Logger.getLogger(ClienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+				}                            
                         }
                             
                             
@@ -77,6 +126,28 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
 						//Verifica se a senha é igual a senha confirmada:
 						if (senha.equals(confirmaSenha) && !senha.equals("")) {
                                                     //CADASTRA, MONTA PACOTE E ENVIA!
+                                                    //Cria novo cliente:
+							Jogador novoJogador = new Jogador(nome, senha);
+
+							//Cria um novo pacote:
+							Pacote pacote = new Pacote(TipoPacote.CADASTRO, novoJogador);
+                                                
+                                                    aplicacao = new ProgramCliente("127.0.0.1", 26147);    
+                                                    try {
+                                                        
+                                                    aplicacao.executaClient(); //Executa a aplicação cliente
+                                                    Pacote resposta = aplicacao.enviarMsn(pacote);
+                                                    aplicacao.fecharConexao();
+                                                    if (resposta.getTipo() == TipoPacote.SUCESSO_CADASTRO) { // Se o a confirmaÃ§Ã£o do servidor for positiva:
+									JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+									telaCadastro.dispose();
+									loginJanela.setVisible(true); // Volta a tela de login
+								}
+                                                } catch (IOException ex) {
+                                                    Logger.getLogger(ClienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+                                                } catch (ClassNotFoundException ex) {
+                                                    Logger.getLogger(ClienteControlador.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
                                                     System.out.println("login: "+nome+" senha: "+senha);
 						
                                                 } else {

@@ -5,12 +5,15 @@
 package trunk.model;
 
 import java.io.Serializable;
-
+import java.net.UnknownHostException;
 /**
  *
  * @author Ycaro_2
  */
-public class Jogador implements Serializable {
+@SuppressWarnings("serial")
+public class Jogador implements Serializable, Comparable<Jogador>{
+    private static int IDgenerator;
+    private int IDcliente;
     private String login;
     private String senha;
 
@@ -19,6 +22,7 @@ public class Jogador implements Serializable {
 	}
    
     public Jogador(String login, String senha) {
+        this.IDcliente = IDgenerator++;
 		this.senha = senha;
                 this.login = senha;
 	}
@@ -38,5 +42,10 @@ public class Jogador implements Serializable {
     public String getSenha() {
         return senha;
     }
+    
+    @Override
+	public int compareTo(Jogador j) {
+		return this.getLogin().compareTo(j.getLogin());
+	}
     
 }
