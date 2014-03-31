@@ -62,7 +62,7 @@ public class TrataPacote implements Runnable{
 				if (pacoteRecebido.getTipo() == TipoPacote.CADASTRO) {
 
 					//é um cliente para ser inserido no banco de dados
-					Jogador cadastro = (Jogador) pacoteRecebido.getConteudo();
+					Usuario cadastro = (Usuario) pacoteRecebido.getConteudo();
 					BancoDeJogadores bancoDeJogadores = new BancoDeJogadores(ProgramServer.getBancoDeJogadores());
 					if (bancoDeJogadores.inserirJogador(cadastro)) {
 						ProgramServer.setBancoDeJogadores(bancoDeJogadores);
@@ -83,7 +83,7 @@ public class TrataPacote implements Runnable{
 
 					Pacote pacoteConfirmacao;
 					//é um cliente para ser buscado no banco de jogadores
-					Jogador buscarCadastro = (Jogador) pacoteRecebido.getConteudo();
+					Usuario buscarCadastro = (Usuario) pacoteRecebido.getConteudo();
 					BancoDeJogadores bancoDeJogadores = new BancoDeJogadores(ProgramServer.getBancoDeJogadores());
 					if (bancoDeJogadores.autentica(buscarCadastro)) {
 						ProgramServer.setBancoDeJogadores(bancoDeJogadores);

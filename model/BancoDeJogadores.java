@@ -15,31 +15,31 @@ import java.util.List;
  * @author Karine
  */
 @SuppressWarnings("serial")
-public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
+public class BancoDeJogadores implements Serializable, Iterable<Usuario> {
 
-	private List<Jogador> bancoDeJogadores;
+	private List<Usuario> bancoDeJogadores;
 
-	public List<Jogador> getBancoDeJogadores() {
+	public List<Usuario> getBancoDeJogadores() {
 		return bancoDeJogadores;
 	}
         
-        public Jogador getJogador(int i) {
-                Jogador jl = bancoDeJogadores.get(i);
+        public Usuario getJogador(int i) {
+                Usuario jl = bancoDeJogadores.get(i);
 		return jl;
 	}
         
 	public BancoDeJogadores() {
-		bancoDeJogadores = new ArrayList<Jogador>();
+		bancoDeJogadores = new ArrayList<Usuario>();
 		Collections.sort(bancoDeJogadores);
 	}
 
 	public BancoDeJogadores(BancoDeJogadores novoBanco) {
-		bancoDeJogadores = new ArrayList<Jogador>();
+		bancoDeJogadores = new ArrayList<Usuario>();
 		bancoDeJogadores.addAll(novoBanco.getBancoDeJogadores());
 		Collections.sort(bancoDeJogadores);
 	}
         
-	public boolean inserirJogador(Jogador novoJogador) { // insere cliente na lista
+	public boolean inserirJogador(Usuario novoJogador) { // insere cliente na lista
 		if (!contem(novoJogador)) {
 			return bancoDeJogadores.add(novoJogador);
 		} else {
@@ -51,9 +51,9 @@ public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
 		return bancoDeJogadores.addAll(jogadores.bancoDeJogadores);
 	}
 
-	public boolean autentica(Jogador jogador) { //Busca jogador na lista de jogadores
+	public boolean autentica(Usuario jogador) { //Busca jogador na lista de jogadores
 
-		for (Jogador aux : bancoDeJogadores) {
+		for (Usuario aux : bancoDeJogadores) {
 			if (aux.getLogin().equals(jogador.getLogin())
 					&& aux.getSenha().equals(jogador.getSenha())) {
 				
@@ -63,9 +63,9 @@ public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
 		return false;
 	}    
 
-	public boolean excluirJogador(Jogador jogador) { //Exclui cliente da lista de jogadores
+	public boolean excluirJogador(Usuario jogador) { //Exclui cliente da lista de jogadores
 
-		for (Jogador aux : bancoDeJogadores) {
+		for (Usuario aux : bancoDeJogadores) {
 			if (aux.getLogin().equals(jogador.getLogin())
 					&& aux.getSenha().equals(jogador.getSenha())) {
 				bancoDeJogadores.remove(aux);
@@ -77,8 +77,8 @@ public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
 	}    
 
 	
-	public boolean contem(Jogador jogador) { //Busca cliente na lista de jogadores
-		for (Jogador aux : bancoDeJogadores) {
+	public boolean contem(Usuario jogador) { //Busca cliente na lista de jogadores
+		for (Usuario aux : bancoDeJogadores) {
 			if (aux.getLogin().equals(jogador.getLogin())) {
 				return true;
 			}
@@ -87,8 +87,8 @@ public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
 	}
 	
 	
-	public Jogador getJogador(String login) {
-		for (Jogador jogador : bancoDeJogadores) {
+	public Usuario getJogador(String login) {
+		for (Usuario jogador : bancoDeJogadores) {
 			if (jogador.getLogin().equals(login)) {
 				return jogador;
 			}
@@ -97,7 +97,7 @@ public class BancoDeJogadores implements Serializable, Iterable<Jogador> {
 	}
 
 	@Override
-	public Iterator<Jogador> iterator() {
+	public Iterator<Usuario> iterator() {
 		return bancoDeJogadores.iterator();
 	}
 
