@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.MouseInputListener;
 import trunk.model.BancoDeJogadores;
-import trunk.model.Jogador;
+import trunk.model.Usuario;
 import trunk.model.Pacote;
 import trunk.model.ProgramCliente;
 import trunk.model.TipoPacote;
@@ -35,7 +35,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
     private TelaCadastro telaCadastro;
     public ProgramCliente aplicacao;
     private BancoDeJogadores jogadores;
-    public Jogador jogador;
+    public Usuario jogador;
     public ClienteControlador(){
         
      loginJanela = new LoginWindow(this);
@@ -60,7 +60,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
                                     JOptionPane.showMessageDialog(null, "Todos os campos precisam ser preenchidos");
                             }else{
                            //VAMOS VERIFICAR SE O CLIENTE ESTÃ� CADASTRADO NO SISTEMA PRIMEIRO
-				jogador = new Jogador(login, senha);
+				jogador = new Usuario(login, senha);
 
 				//Cria um novo pacote para ser enviado par ao servidor
 				Pacote pacote = new Pacote(TipoPacote.LOGIN, jogador);
@@ -127,7 +127,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
 						if (senha.equals(confirmaSenha) && !senha.equals("")) {
                                                     //CADASTRA, MONTA PACOTE E ENVIA!
                                                     //Cria novo cliente:
-							Jogador novoJogador = new Jogador(nome, senha);
+							Usuario novoJogador = new Usuario(nome, senha);
 
 							//Cria um novo pacote:
 							Pacote pacote = new Pacote(TipoPacote.CADASTRO, novoJogador);

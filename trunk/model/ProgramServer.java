@@ -52,7 +52,7 @@ public void ExecutarServidor() throws ClassNotFoundException{
 			jogadoresInput.close();
 			telaServer.exibirMessagem("Lendo jogadores cadastrados:\n");
 			telaServer.exibirMessagem("   "+"Login:SENHA\n");
-			for(Jogador jogador:bancoDeJogadores){
+			for(Usuario jogador:bancoDeJogadores){
 				telaServer.exibirMessagem("   "+jogador.getLogin()+":"+jogador.getSenha()+"\n");
 			}
 			telaServer.exibirMessagem("\n");

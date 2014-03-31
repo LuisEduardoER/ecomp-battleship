@@ -11,9 +11,9 @@ import java.util.Random;
  * @author Ycaro_2
  */
 public class Partida {
-    private Jogador jogador1;
-    private Jogador jogador2;
-    private Jogador vencedor;
+    private Usuario jogador1;
+    private Usuario jogador2;
+    private Usuario vencedor;
     private int qtdJogadas;
  
     
