@@ -98,6 +98,62 @@ public class TrataPacote implements Runnable{
 						sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente						
 					}       
                                 
+                                } else if (pacoteRecebido.getTipo() == TipoPacote.PROCURAR_OPONENTE){
+                                    int num_partida = ProgramServer.getNumPartida();
+                                    int num_jogadores = ProgramServer.getNum_Jogadores();
+                                    Pacote pacoteConfirmacao;
+                                    if(num_partida==1){
+                                        
+                                        if(num_jogadores==2){
+                                            
+                                            Jogador j1 = (Jogador) pacoteRecebido.getConteudo();
+                                            j1.setEndereco(receivePacket.getAddress());
+                                            j1.setPorta(receivePacket.getPort());
+                                            ProgramServer.addJogadores(j1);
+                                            
+                                            num_jogadores--;
+                                            ProgramServer.setNum_Jogadores(num_jogadores);
+                                            pacoteConfirmacao = new Pacote(TipoPacote.ESPERAR_OPONENTE, "COM SUCESSO");
+                                            sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente	
+                                        }else if(num_jogadores==1){
+                                            
+                                           Jogador j2 = (Jogador) pacoteRecebido.getConteudo();
+                                            j2.setEndereco(receivePacket.getAddress());
+                                            j2.setPorta(receivePacket.getPort());
+                                            ProgramServer.addJogadores(j2);
+                                            
+                                            num_jogadores--;
+                                            ProgramServer.setNum_Jogadores(num_jogadores);                                            
+                                            num_partida--;
+                                            ProgramServer.setNumPartida(num_partida);
+                                            
+                                            PartidaS servidorPartida = new PartidaS(ProgramServer.getJogadores());
+                                            servidorPartida.ExecutarServidor();
+                                            
+                                            pacoteConfirmacao = new Pacote(TipoPacote.ESPERAR_OPONENTE, "COM SUCESSO");
+                                            sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente 
+                                        }else{
+                                        //Se já existe partida sendo jogada no momento.                           
+						pacoteConfirmacao = new Pacote(TipoPacote.EXISTE_PARTIDA, "SEM SUCESSO");
+						sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente	
+                                        }       
+                                    }else{
+                                        //Se já existe partida sendo jogada no momento.                           
+						pacoteConfirmacao = new Pacote(TipoPacote.EXISTE_PARTIDA, "SEM SUCESSO");
+						sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente	
+                                    }
+                                }else if(pacoteRecebido.getTipo() == TipoPacote.LIBERAR_PARTIDA){
+                                    
+                                    int num_partida = ProgramServer.getNumPartida();
+                                    Pacote pacoteConfirmacao;
+                                    
+                                    if(num_partida==0){
+                                        
+                                        num_partida++;
+                                        ProgramServer.setNumPartida(num_partida);
+                                        pacoteConfirmacao = new Pacote(TipoPacote.PARTIDA_LIBERADA, "COM SUCESSO");
+					sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente
+                                    }
                                 }
             }  catch (ClassNotFoundException ex) {
 			Logger.getLogger(TrataPacote.class.getName()).log(Level.SEVERE, null, ex);
