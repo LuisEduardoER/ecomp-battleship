@@ -57,11 +57,11 @@ public class Tabuleiro {
 
 	
 	public void inicializaEmbarcacao(){
-		this.e1 = new Barco("Submarino",1,jog1);
-		this.e2 = new Barco("Fragata",2,jog1);
-		this.e3 = new Barco("Contra Torpedo",3,jog1);
-		this.e4 = new Barco("Destroyer",4,jog1);
-		this.e5 = new Barco("Porta Avião",5,jog1);
+		this.e1 = new Barco("Submarino",1);
+		this.e2 = new Barco("Fragata",2);
+		this.e3 = new Barco("Contra Torpedo",3);
+		this.e4 = new Barco("Destroyer",4);
+		this.e5 = new Barco("Porta Avião",5);
 	}
 	public void Sorteio(int[] [] tabuleiro) {
 
