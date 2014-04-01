@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import trunk.view.TelaServer;
@@ -22,13 +23,18 @@ import trunk.view.TelaServer;
  * @author Ycaro_2
  */
 public class ProgramServer {
+
     
+
 private DatagramSocket Serversocket;
 private int porta;
 private TelaServer telaServer;
 private static BancoDeJogadores bancoDeJogadores = new BancoDeJogadores();
 private File arquivoJogadores;
 private ObjectInputStream jogadoresInput;
+private static Integer num_Partidas = new Integer(1);
+private static Integer num_Jogadores = new Integer(2);
+private static ArrayList Jogadores =  new ArrayList() ;
 
 public ProgramServer(int porta){
                 telaServer = new TelaServer();
@@ -96,5 +102,31 @@ public void waitForPackets() throws ClassNotFoundException, IOException
         ProgramServer.bancoDeJogadores = bancoDeJogadores;
     }
 
+    public static Integer getNumPartida() {
+        return num_Partidas;
+    }
+
+    public static void setNumPartida(Integer Num_Partidas) {
+        ProgramServer.num_Partidas = Num_Partidas;
+    }
+
+    public static Integer getNum_Jogadores() {
+        return num_Jogadores;
+    }
+
+    public static void setNum_Jogadores(Integer num_Jogadores) {
+        ProgramServer.num_Jogadores = num_Jogadores;
+    }
+    
+    public static ArrayList getJogadores() {
+		return Jogadores;
+	}
+
+    public static void addJogadores(Jogador jogador) {
+		ProgramServer.Jogadores.add(jogador);
+	}
+        public static void removeJogadores(Jogador jogador) {
+		ProgramServer.Jogadores.remove(jogador);
+	}
 
 }
