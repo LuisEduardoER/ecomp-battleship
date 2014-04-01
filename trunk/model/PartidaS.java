@@ -25,27 +25,27 @@ class PartidaS {
     
     private ArrayList jogadores;
     private DatagramSocket PartidaServersocket;
-    private Tabuleiro tab1;
-    private Tabuleiro tab2;
+    private static Tabuleiro tab1;
+    private static Tabuleiro tab2;
 
     
-    public Tabuleiro getTab1() {
+    public static Tabuleiro getTab1() {
 		return tab1;
 	}
 
 
-	public void setTab1(Tabuleiro tab1) {
-		this.tab1 = tab1;
+	public static void setTab1(Tabuleiro tab1) {
+		PartidaS.tab1 = tab1;
 	}
 
 
-	public Tabuleiro getTab2() {
+	public static Tabuleiro getTab2() {
 		return tab2;
 	}
 
 
-	public void setTab2(Tabuleiro tab2) {
-		this.tab2 = tab2;
+	public static void setTab2(Tabuleiro tab2) {
+		PartidaS.tab2 = tab2;
 	}
 
 

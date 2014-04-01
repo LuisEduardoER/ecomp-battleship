@@ -1,4 +1,4 @@
-package tabuleirobattleship;
+package trunk.view;
 
 import javax.swing.*;
 import java.awt.*;
