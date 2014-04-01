@@ -24,6 +24,7 @@ import trunk.model.ProgramCliente;
 import trunk.model.TipoPacote;
 import trunk.view.LoginWindow;
 import trunk.view.TelaCadastro;
+import trunk.view.ViewEcompBattleship;
 
 /**
  *
@@ -36,6 +37,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
     public ProgramCliente aplicacao;
     private BancoDeJogadores jogadores;
     public Usuario jogador;
+    private ViewEcompBattleship telaInicial;
     public ClienteControlador(){
         
      loginJanela = new LoginWindow(this);
@@ -90,13 +92,14 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
                                             }
                                                 
 						
-                                                //CHAMAR TELA DO JOGO new viewEcompBattleship();
+                                               telaInicial = new ViewEcompBattleship();
 					}
 
 					// Se o usuÃ¡rio nÃ£o estiver cadastrado:
 					if (resposta.getTipo() == TipoPacote.NAO_CADASTRADO) {//Se o cliente não estiver cadastrado
 						JOptionPane.showMessageDialog(null, "Você precisa se cadastrar primeiro");
                                         }
+                                        
 
 				} catch (SocketException ex) {
 					JOptionPane.showMessageDialog(null, "Não foi possível estabelecer uma conexão com o servidor informado!", "", JOptionPane.ERROR_MESSAGE);
@@ -132,7 +135,7 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
 							//Cria um novo pacote:
 							Pacote pacote = new Pacote(TipoPacote.CADASTRO, novoJogador);
                                                 
-                                                    aplicacao = new ProgramCliente("127.0.0.1", 26147);    
+                                                    aplicacao = new ProgramCliente("172.16.103.3", 26147);    
                                                     try {
                                                         
                                                     aplicacao.executaClient(); //Executa a aplicação cliente
@@ -143,6 +146,9 @@ public class ClienteControlador implements ActionListener, MouseInputListener, K
 									telaCadastro.dispose();
 									loginJanela.setVisible(true); // Volta a tela de login
 								}
+                                                    if (resposta.getTipo() == TipoPacote.FALHA_LOGIN) {//Se o cliente não estiver cadastrado
+                                                    JOptionPane.showMessageDialog(null, "ERRO NO CADASTRO");
+                                        }
                                                 } catch (IOException ex) {
                                                     Logger.getLogger(ClienteControlador.class.getName()).log(Level.SEVERE, null, ex);
                                                 } catch (ClassNotFoundException ex) {

@@ -3,7 +3,7 @@ package trunk.model;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.util.List;
-
+@SuppressWarnings("serial")
 public class Jogador extends Usuario implements Serializable{
 	
 	

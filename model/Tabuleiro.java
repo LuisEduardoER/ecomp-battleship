@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class Tabuleiro {
 
 	static int tabuleiro[][];
+        //variÃ¡veis que servem para identificar os barcos
 	static Barco e1;
 	static Barco e2;
 	static Barco e3;
@@ -14,13 +15,14 @@ public class Tabuleiro {
 	static Barco e5;
 	static int destruidos =0;
 	static Jogador jog1;
+        //variÃ¡veis que servem para somar o tamanho das embarcaÃ§Ãµes na hora do naufrÃ¡gio
 	static int b1=0;
 	static int b2=0;
 	static int b3=0;
 	static int b4=0;
 	static int b5=0;
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
 		
 		tabuleiro = new int [10][10];
@@ -29,19 +31,15 @@ public class Tabuleiro {
 		Sorteio();
 		
 	
-	
 		mostraTabuleiro(tabuleiro);
 		
 			
-		
-	
-
-}
+}*/
 
 	public Tabuleiro() {
 
 		tabuleiro = new int[10][10];
-		// Preenchendo todas as posições da matriz com valor zero
+		// Preenchendo todas as posiï¿½ï¿½es da matriz com valor zero
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 
@@ -53,23 +51,23 @@ public class Tabuleiro {
 	}// construtor
 	
 
-	
+	//Inicializando as embarcaÃ§Ãµes
 	public static void inicializaEmbarcacao(){
 		Tabuleiro.e1 = new Barco("Submarino",1);
 		Tabuleiro.e2 = new Barco("Fragata",2);
 		Tabuleiro.e3 = new Barco("Contra Torpedo",3);
 		Tabuleiro.e4 = new Barco("Destroyer",4);
-		Tabuleiro.e5 = new Barco("Porta Avião",5);
+		Tabuleiro.e5 = new Barco("Porta Aviï¿½o",5);
 	}
 	public static void Sorteio() {
 
 		for (int i = 1; i < 6; i++) {
 
-			// Gera numeros aleatórios entre 0 e 9
+			// Gera numeros aleatï¿½rios entre 0 e 9
 			int linha = (int) Math.random() * 10;
 			int coluna = (int) Math.random() * 10;
 
-			// Inserção do submarino (1 quadrado)        AQUIIIIIIIIII
+			// Inserï¿½ï¿½o do submarino (1 quadrado)        AQUIIIIIIIIII
 			if(i==1){
 			if (tabuleiro[linha][coluna] == 0) {
 
@@ -78,31 +76,31 @@ public class Tabuleiro {
 			}// if
 			}
 
-			//Para todas as embarcações maiores que 1 deve-se escolher seu sentido(horizontal ou vertical)
+			//Para todas as embarcaï¿½ï¿½es maiores que 1 deve-se escolher seu sentido(horizontal ou vertical)
 			if (i > 1) {
 
 				if (Sentido()) {// Se for verdadeiro == Horizontal
 
 					if (VerificaHorizontal(linha, coluna, i)) {// valida a
-																// inserção
+										// inserÃ§Ã£o
 						for(int m=0;m<i;m++){
 						tabuleiro[linha][coluna+m] = i;
 						}
 					
 						i++;
-					}// if condição de inserção
+					}// if condiÃ§Ã£o de inserÃ§Ã£o
 
 				}// if sentido
 
 				else {
 
 					if (VerificaVertical(linha, coluna, i)) {// valida a
-																// inserção
+										// inserï¿½ï¿½o
 						for(int n=0;n<i;n++){
 						tabuleiro[linha+n][coluna] = i;
 						}						
 						i++;
-					}// if condição de inserção
+					}// if condiï¿½ï¿½o de inserï¿½ï¿½o
 
 				}
 
@@ -113,7 +111,7 @@ public class Tabuleiro {
 	
 	
 	
-	// Método que escolhe se os barcos serão distribuidos na Horizontal(true) ou
+	// Mï¿½todo que escolhe se os barcos serï¿½o distribuidos na Horizontal(true) ou
 	// Vertical(false)
 	public static boolean Sentido() {
 
@@ -123,7 +121,7 @@ public class Tabuleiro {
 		return resultado;
 	}
 
-	// Método que valida a inserção de um barco na horizontal
+	// Mï¿½todo que valida a inserï¿½ï¿½o de um barco na horizontal
 	public static boolean VerificaHorizontal(int l, int c, int num) {
 
 		if (tabuleiro[l][c] == 0 && tabuleiro[l][c - 1] == 0
@@ -149,7 +147,7 @@ public class Tabuleiro {
 
 	}
 
-	// Método que valida a inserção de um barco na vertical
+	// Mï¿½todo que valida a inserï¿½ï¿½o de um barco na vertical
 	public static boolean VerificaVertical(int l, int c, int num) {
 
 		if (tabuleiro[l][c] == 0 && tabuleiro[l - 1][c] == 0
@@ -175,57 +173,58 @@ public class Tabuleiro {
 	}
 	
 	
-	public static void mostraTabuleiro(int[][] tabuleiro){
+	/*public static void mostraTabuleiro(int[][] tabuleiro){
 		 
 	    }
-	
+	*/
 	
 	public  Boolean darTiro(int linha, int coluna) {
 		
 		
-		for(int i = 1; i <= 5; i++){
-			if(tabuleiro[linha][coluna] == i){
-				if(tabuleiro[linha][coluna] == e1.getTamanho()){
+		for(int i=1;i<6;i++){
+			if(tabuleiro[linha][coluna] == i){// se o conteudo da linha for igual a 1
+				if(tabuleiro[linha][coluna] == e1.getTamanho()){//numero do submarino
 					//e1++;
 					destruidos++;
 					JOptionPane.showMessageDialog(null, "Fogo");
-					JOptionPane.showMessageDialog(null, "Submarino Naufragou");
-				}else if(tabuleiro[linha][coluna] == e2.getTamanho()){
-					b2++;
+					JOptionPane.showMessageDialog(null, "Submarino Afundou");
+				}else if(tabuleiro[linha][coluna] == e2.getTamanho()){//numero do fragata
+					b2++;//
 					JOptionPane.showMessageDialog(null, "Fogo");
-					if(b2 == 2){
+					if(b2 == 2){//quando a quantidade de b2 for igual ao tamanho de 2
 						destruidos++;
-						JOptionPane.showMessageDialog(null, "Fragata Naufragou");
+						JOptionPane.showMessageDialog(null, "Fragata Afundou");
 					}
 				}else if(tabuleiro[linha][coluna] == e3.getTamanho()){
 					b3++;
 					JOptionPane.showMessageDialog(null, "Fogo");
-					if(b3 == 3){
+					if(b3 == 3){//quando a quantidade de b3 for igual ao tamanho de 3
 						destruidos++;
-						JOptionPane.showMessageDialog(null, "Contra Torpedo Naufragou");
+						JOptionPane.showMessageDialog(null, "Contra Torpedo Afundou");
 					}
 				}else if(tabuleiro[linha][coluna] == e4.getTamanho()){
 					b4++;
 					JOptionPane.showMessageDialog(null, "Fogo");
-					if(b4 == 4){
+					if(b4 == 4){//quando a quantidade de b4 for igual ao tamanho de 4
 						destruidos++;
-						JOptionPane.showMessageDialog(null, "Destroyer Naufragou");
+						JOptionPane.showMessageDialog(null, "Destroyer Afundou");
 					}
 				}else if(tabuleiro[linha][coluna] == e5.getTamanho()){
 					b5++;
 					JOptionPane.showMessageDialog(null, "Fogo");
-					if(b5 == 5){
+					if(b5 == 5){//quando a quantidade de b5 for igual ao tamanho de 5
 						destruidos++;
-						JOptionPane.showMessageDialog(null, "Porta-Aviao Naufragou");
+						JOptionPane.showMessageDialog(null, "Porta-Aviao Afundou");
 						
 					}
 				}
 				
 				return true;
 			}
-		}
-		return false;
 		
+        }
+		return false;
+                
 	}
 
 		public int getDestruidos(){
