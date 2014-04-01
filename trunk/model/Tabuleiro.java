@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Tabuleiro {
 
-	private int tabuleiro[][];
+	static int tabuleiro[][];
 	static Barco e1;
 	static Barco e2;
 	static Barco e3;
@@ -20,6 +20,23 @@ public class Tabuleiro {
 	static int b4=0;
 	static int b5=0;
 
+	/*public static void main(String[] args) {
+		
+		
+		tabuleiro = new int [10][10];
+		
+		inicializaEmbarcacao();
+		Sorteio(tabuleiro);
+		
+	
+	do{
+		mostraTabuleiro(tabuleiro);
+		
+			
+		
+	}while(destruidos != 5);
+
+}*/
 
 	public Tabuleiro() {
 
@@ -35,29 +52,18 @@ public class Tabuleiro {
 
 	}// construtor
 	
+
+
+
+	
 	public void inicializaEmbarcacao(){
 		this.e1 = new Barco("Submarino",1,jog1);
 		this.e2 = new Barco("Fragata",2,jog1);
 		this.e3 = new Barco("Contra Torpedo",3,jog1);
 		this.e4 = new Barco("Destroyer",4,jog1);
 		this.e5 = new Barco("Porta Avião",5,jog1);
-
-		
 	}
-/*	public static void main(String[] args) {
-	
-			Sorteio();
-		//	inicializaEmbarcacoes( tabuleiro);
-		
-		//do{
-			mostraTabuleiro(tabuleiro);
-			
-				
-			
-		//}while(destruidos != 5);
-
-	}*/
-	public void Sorteio() {
+	public void Sorteio(int[] [] tabuleiro) {
 
 		for (int i = 1; i < 6; i++) {
 
