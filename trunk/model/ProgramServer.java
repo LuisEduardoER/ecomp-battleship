@@ -34,7 +34,8 @@ private File arquivoJogadores;
 private ObjectInputStream jogadoresInput;
 private static Integer num_Partidas = new Integer(1);
 private static Integer num_Jogadores = new Integer(2);
-private static ArrayList Jogadores =  new ArrayList() ;
+private static ArrayList Jogadores =  new ArrayList();
+public  static PartidaS servidorPartida = null;
 
 public ProgramServer(int porta){
                 telaServer = new TelaServer();
@@ -93,6 +94,12 @@ public void waitForPackets() throws ClassNotFoundException, IOException
             Thread t = new Thread(thr);
             t.start();  
    }
+public void finalizarPartida(){
+    num_Partidas = new Integer(1);
+    num_Jogadores = new Integer(2);
+    Jogadores =  new ArrayList() ;
+
+}
 
     public static BancoDeJogadores getBancoDeJogadores() {
         return bancoDeJogadores;

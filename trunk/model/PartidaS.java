@@ -59,7 +59,7 @@ public void waitForPackets() throws ClassNotFoundException, IOException
             PartidaServersocket.receive( receivePacket );
             
             
-            TrataPartida thr = new TrataPartida(ProgramServer.getJogadores());                                            
+            TrataPartida thr = new TrataPartida(ProgramServer.getJogadores(), PartidaServersocket);                                            
             Thread t = new Thread(thr);
             t.start(); 
    }

@@ -31,6 +31,7 @@ public class TrataPacote implements Runnable{
     
     
     
+    
     TrataPacote(DatagramSocket Serversocket, DatagramPacket receivePacket) {
         this.Serversocket = Serversocket;
         this.receivePacket = receivePacket;
@@ -127,9 +128,8 @@ public class TrataPacote implements Runnable{
                                             num_partida--;
                                             ProgramServer.setNumPartida(num_partida);
                                             
-                                            PartidaS servidorPartida = new PartidaS(ProgramServer.getJogadores());
-                                            servidorPartida.ExecutarServidor();
-                                            
+                                            ProgramServer.servidorPartida = new PartidaS(ProgramServer.getJogadores());
+                                            ProgramServer.servidorPartida.ExecutarServidor();
                                             pacoteConfirmacao = new Pacote(TipoPacote.ESPERAR_OPONENTE, "COM SUCESSO");
                                             sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente 
                                         }else{
@@ -154,7 +154,20 @@ public class TrataPacote implements Runnable{
                                         pacoteConfirmacao = new Pacote(TipoPacote.PARTIDA_LIBERADA, "COM SUCESSO");
 					sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente
                                     }
+                                }else if(pacoteRecebido.getTipo() == TipoPacote.CANCELAR_PEDIDO_PARTIDA){
+                                            Pacote pacoteConfirmacao;
+                                            int num_jogadores = ProgramServer.getNum_Jogadores();
+                                            Jogador j2 = (Jogador) pacoteRecebido.getConteudo();
+                                            
+                                            j2.setEndereco(receivePacket.getAddress());
+                                            j2.setPorta(receivePacket.getPort());
+                                            ProgramServer.removeJogadores(j2);
+                                            num_jogadores++;
+                                            ProgramServer.setNum_Jogadores(num_jogadores);
+                                            pacoteConfirmacao = new Pacote(TipoPacote.PARTIDA_CANCELADA, "COM SUCESSO");
+                                            sendPacketToClient(pacoteConfirmacao, receivePacket);//Envia confirmação para o cliente
                                 }
+                                
             }  catch (ClassNotFoundException ex) {
 			Logger.getLogger(TrataPacote.class.getName()).log(Level.SEVERE, null, ex);
 			System.out.println(ex.toString() + "\n" + "Processamento de com Problemas");
@@ -178,6 +191,6 @@ public class TrataPacote implements Runnable{
       Serversocket.send( sendPacket ); // send packet to client
       
    } // end method sendPacketToClient
-
+    
 }
 
