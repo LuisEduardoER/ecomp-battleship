@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ycaro_2
@@ -57,8 +59,32 @@ private DatagramSocket PartidaServersocket;
         
         if(pacoteRecebido.getTipo() == TipoPacote.TIRO){
         
-        
+       ArrayList temp = (ArrayList)pacoteRecebido.getConteudo();
+       Jogador jog = (Jogador)temp.get(0);
+       int pLinha = (int)temp.get(1);
+       int pColuna = (int)temp.get(2);
+       
+      Jogador jog1 = (Jogador)jogadores.get(0);
+      Jogador jog2 =(Jogador)jogadores.get(1);
             
+       //Se o jogador que deu o tiro for igual ao jogador 1, o tabuleiro a ser modificado sera o tab2
+       	if(jog1 == jog){
+       		
+       	Tabuleiro tabTemp = PartidaS.getTab2();
+       	tabTemp.darTiro(pLinha,pColuna);
+       	PartidaS.setTab2(tabTemp);
+       	
+       		
+       		
+       		
+       	}else{//Se o jogador que deu o tiro não  for igual ao jogador 1,ou seja
+       		//ele é o jogador2, o tabuleiro a ser modificado sera o tab1
+       		
+       		
+       		
+       		
+       	}
+       		
         }    
         
             }  catch (ClassNotFoundException ex) {

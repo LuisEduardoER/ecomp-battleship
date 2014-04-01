@@ -20,23 +20,23 @@ public class Tabuleiro {
 	static int b4=0;
 	static int b5=0;
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		
 		tabuleiro = new int [10][10];
 		
 		inicializaEmbarcacao();
-		Sorteio(tabuleiro);
+		Sorteio();
 		
 	
-	do{
+	
 		mostraTabuleiro(tabuleiro);
 		
 			
 		
-	}while(destruidos != 5);
+	
 
-}*/
+}
 
 	public Tabuleiro() {
 
@@ -54,14 +54,14 @@ public class Tabuleiro {
 	
 
 	
-	public void inicializaEmbarcacao(){
-		this.e1 = new Barco("Submarino",1);
-		this.e2 = new Barco("Fragata",2);
-		this.e3 = new Barco("Contra Torpedo",3);
-		this.e4 = new Barco("Destroyer",4);
-		this.e5 = new Barco("Porta Avião",5);
+	public static void inicializaEmbarcacao(){
+		Tabuleiro.e1 = new Barco("Submarino",1);
+		Tabuleiro.e2 = new Barco("Fragata",2);
+		Tabuleiro.e3 = new Barco("Contra Torpedo",3);
+		Tabuleiro.e4 = new Barco("Destroyer",4);
+		Tabuleiro.e5 = new Barco("Porta Avião",5);
 	}
-	public void Sorteio() {
+	public static void Sorteio() {
 
 		for (int i = 1; i < 6; i++) {
 
@@ -115,7 +115,7 @@ public class Tabuleiro {
 	
 	// Método que escolhe se os barcos serão distribuidos na Horizontal(true) ou
 	// Vertical(false)
-	public boolean Sentido() {
+	public static boolean Sentido() {
 
 		Random gerador = new Random();
 		boolean resultado = gerador.nextBoolean();
@@ -124,7 +124,7 @@ public class Tabuleiro {
 	}
 
 	// Método que valida a inserção de um barco na horizontal
-	public boolean VerificaHorizontal(int l, int c, int num) {
+	public static boolean VerificaHorizontal(int l, int c, int num) {
 
 		if (tabuleiro[l][c] == 0 && tabuleiro[l][c - 1] == 0
 				&& tabuleiro[l - 1][c] == 0 && tabuleiro[l + 1][c] == 0
@@ -150,7 +150,7 @@ public class Tabuleiro {
 	}
 
 	// Método que valida a inserção de um barco na vertical
-	public boolean VerificaVertical(int l, int c, int num) {
+	public static boolean VerificaVertical(int l, int c, int num) {
 
 		if (tabuleiro[l][c] == 0 && tabuleiro[l - 1][c] == 0
 				&& tabuleiro[l][c - 1] == 0 && tabuleiro[l][c + 1] == 0
@@ -175,49 +175,8 @@ public class Tabuleiro {
 	}
 	
 	
-	public void mostraTabuleiro(int[][] tabuleiro){
-		 int e5,e4, e3, e2,e1;
-		e5 =e4 = e3 = e2 =e1 =0;
-	        for(int linha=0 ; linha < 10 ; linha++ ){
-	          
-	            for(int coluna=0 ; coluna < 10 ; coluna++ ){
-	            	if(tabuleiro[linha][coluna] == 0 ){
-	            		System.out.println("E1 =" + linha + " x " + coluna );
-	            		 e1++;
-	            	}else if(tabuleiro[linha][coluna]== 1 ){
-	            		System.out.println("E2 =" + linha + " x " + coluna );
-	            		 e2++;
-	            	}else if(tabuleiro[linha][coluna]== 2 ){
-	            		System.out.println("E3 =" + linha + " x " + coluna );
-	            		 e3++;
-	            	}else if(tabuleiro[linha][coluna]== 3 ){
-	            		System.out.println("E4 =" + linha + " x " + coluna );
-	            		 e4++;
-	            	}else if(tabuleiro[linha][coluna]== 4 ){
-	            		System.out.println("E5 =" + linha + " x " + coluna );
-	            		 e5++;
-	            	}
-	            		
-	            	}
-	         }
-	        System.out.println("E1 = " + e1 + "E2 = " + e2 + "E3 = " + e3 + "E4 = " + e4 + "E5 = " + e5);
-	        System.out.println("\t0\t1 \t2 \t3 \t4 \t5 \t6 \t7 \t8 \t9");
-	        System.out.println();
-	        for(int linha=0 ; linha < 10 ; linha++ ){
-	            System.out.print((-1 +linha+1)+"");
-	            for(int coluna=0 ; coluna < 10 ; coluna++ ){
-	                if(tabuleiro[linha][coluna]==-1){
-	                    System.out.print("\t"+"-");
-	                }else if(tabuleiro[linha][coluna]== 0 || tabuleiro[linha][coluna]== 1 || tabuleiro[linha][coluna]== 2 || tabuleiro[linha][coluna]== 3 || tabuleiro[linha][coluna]== 4){
-	                    System.out.print("\t"+"E");
-	                }else if(tabuleiro[linha][coluna]==1){
-	                    System.out.print("\t"+"X");
-	                }
-	                
-	            }
-	            System.out.println();
-	        }
-
+	public static void mostraTabuleiro(int[][] tabuleiro){
+		 
 	    }
 	
 	
@@ -261,9 +220,7 @@ public class Tabuleiro {
 						
 					}
 				}
-				if(destruidos == 5){
-					
-				}
+				
 				return true;
 			}
 		}
@@ -271,7 +228,9 @@ public class Tabuleiro {
 		
 	}
 
-		
+		public int getDestruidos(){
+			return destruidos;
+		}
 
 
 }
