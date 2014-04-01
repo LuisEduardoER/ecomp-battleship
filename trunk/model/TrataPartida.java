@@ -31,6 +31,8 @@ private DatagramSocket PartidaServersocket;
         this.PartidaServersocket = PartidaServersocket;
     }
 
+        
+      
     @Override
     public void run() {
        try {
@@ -64,6 +66,7 @@ private DatagramSocket PartidaServersocket;
        int pLinha = (int)temp.get(1);
        int pColuna = (int)temp.get(2);
        
+       //TERMINANDO
       Jogador jog1 = (Jogador)jogadores.get(0);
       Jogador jog2 =(Jogador)jogadores.get(1);
             
@@ -77,8 +80,8 @@ private DatagramSocket PartidaServersocket;
        		
        		
        		
-       	}else{//Se o jogador que deu o tiro não  for igual ao jogador 1,ou seja
-       		//ele é o jogador2, o tabuleiro a ser modificado sera o tab1
+       	}else{//Se o jogador que deu o tiro nï¿½o  for igual ao jogador 1,ou seja
+       		//ele ï¿½ o jogador2, o tabuleiro a ser modificado sera o tab1
        		
        		
        		
