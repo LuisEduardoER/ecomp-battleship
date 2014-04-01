@@ -58,6 +58,7 @@ private DatagramSocket PartidaServersocket;
         if(pacoteRecebido.getTipo() == TipoPacote.TIRO){
         
         
+            
         }    
         
             }  catch (ClassNotFoundException ex) {
