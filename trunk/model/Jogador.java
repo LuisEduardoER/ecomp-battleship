@@ -9,9 +9,11 @@ public class Jogador extends Usuario implements Serializable{
 	
 	private Barco [] barcos;
 	private List pontos;
-	private Tabuleiro tab;
 	private InetAddress endereco;
-        private int porta;
+    private int porta;
+    
+   
+        
         
 	public Jogador(String login, String senha, InetAddress endereco, int porta){
 	super(login, senha);
@@ -35,7 +37,15 @@ public class Jogador extends Usuario implements Serializable{
         
         }
 
-    public InetAddress getEndereco() {
+    public Barco[] getBarcos() {
+			return barcos;
+		}
+
+		public void setBarcos(Barco[] barcos) {
+			this.barcos = barcos;
+		}
+
+	public InetAddress getEndereco() {
         return endereco;
     }
 
@@ -50,5 +60,7 @@ public class Jogador extends Usuario implements Serializable{
     public void setPorta(int porta) {
         this.porta = porta;
     }
+    
+   
     
 }
