@@ -27,11 +27,11 @@ public class Jogador extends Usuario implements Serializable{
         public void contruirBarcos(){
         
         barcos = new Barco[5];
-        barcos[0] = Barco.constroiBarco(Barco.submarino, this);
-        barcos[1] = Barco.constroiBarco(Barco.fragata, this);
-        barcos[2] = Barco.constroiBarco(Barco.cTorpedo, this);
-        barcos[3] = Barco.constroiBarco(Barco.destroyer, this);
-        barcos[4] = Barco.constroiBarco(Barco.pAviao, this);
+        barcos[0] = Barco.constroiBarco(Barco.submarino);
+        barcos[1] = Barco.constroiBarco(Barco.fragata);
+        barcos[2] = Barco.constroiBarco(Barco.cTorpedo);
+        barcos[3] = Barco.constroiBarco(Barco.destroyer);
+        barcos[4] = Barco.constroiBarco(Barco.pAviao);
         
         }
 

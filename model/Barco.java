@@ -13,31 +13,30 @@ public class Barco {
 	
     private final String nome;
     private final int tamanho;
-    private final Jogador jogador;
     private Point posicao;
     private int orientacao;
 	
-	public Barco(String nome, int tamanho, Jogador jogador){
+	public Barco(String nome, int tamanho){
 		this.nome= nome;
 		this.tamanho = tamanho;
-		this.jogador = jogador;
+		
 		
 		
 		
 	}
 	
-	  public static Barco constroiBarco(int tamanho, Jogador jog) {
+	  public static Barco constroiBarco(int tamanho) {
 	        switch (tamanho) {
 	            case submarino:
-	                return new Barco("Submarino", 1, jog);
+	                return new Barco("Submarino", 1);
 	            case fragata:
-	                return new Barco("Fragata", 2, jog);
+	                return new Barco("Fragata", 2);
 	            case cTorpedo:
-	                return new Barco ("Contra Torpedeiros", 3, jog);
+	                return new Barco ("Contra Torpedeiros", 3);
 	            case destroyer:
-	                return new Barco ("Destroyer", 4, jog);
+	                return new Barco ("Destroyer", 4);
 	            case pAviao:
-	                return new Barco ("Porta Aviao", 5, jog);
+	                return new Barco ("Porta Aviao", 5);
 	            default:
 	                return null;
 	        }
@@ -51,10 +50,7 @@ public class Barco {
 	        return tamanho;
 	    }
 
-	    public Jogador getJogador() {
-	        return jogador;
-	    }
-
+	    
 
 	
 	
