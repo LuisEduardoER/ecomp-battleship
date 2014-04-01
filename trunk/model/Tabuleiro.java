@@ -53,8 +53,6 @@ public class Tabuleiro {
 	}// construtor
 	
 
-
-
 	
 	public void inicializaEmbarcacao(){
 		this.e1 = new Barco("Submarino",1);
@@ -63,7 +61,7 @@ public class Tabuleiro {
 		this.e4 = new Barco("Destroyer",4);
 		this.e5 = new Barco("Porta Avião",5);
 	}
-	public void Sorteio(int[] [] tabuleiro) {
+	public void Sorteio() {
 
 		for (int i = 1; i < 6; i++) {
 
@@ -222,8 +220,9 @@ public class Tabuleiro {
 
 	    }
 	
-public  Boolean darTiro(int linha, int coluna) {
-				
+	
+	public  Boolean darTiro(int linha, int coluna) {
+		
 		
 		for(int i = 1; i <= 5; i++){
 			if(tabuleiro[linha][coluna] == i){
@@ -272,7 +271,7 @@ public  Boolean darTiro(int linha, int coluna) {
 		
 	}
 
-		 
+		
 
 
 }

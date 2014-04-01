@@ -13,8 +13,7 @@ public class Barco {
 	
     private final String nome;
     private final int tamanho;
-    private Point posicao;
-    private int orientacao;
+   
 	
 	public Barco(String nome, int tamanho){
 		this.nome= nome;

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ycaro_2
@@ -23,8 +25,31 @@ class PartidaS {
     
     private ArrayList jogadores;
     private DatagramSocket PartidaServersocket;
+    private Tabuleiro tab1;
+    private Tabuleiro tab2;
+
     
-    public PartidaS(ArrayList jogadores){
+    public Tabuleiro getTab1() {
+		return tab1;
+	}
+
+
+	public void setTab1(Tabuleiro tab1) {
+		this.tab1 = tab1;
+	}
+
+
+	public Tabuleiro getTab2() {
+		return tab2;
+	}
+
+
+	public void setTab2(Tabuleiro tab2) {
+		this.tab2 = tab2;
+	}
+
+
+	public PartidaS(ArrayList jogadores){
     this.jogadores = jogadores;
     }
     
@@ -33,6 +58,13 @@ class PartidaS {
         
     try{
         PartidaServersocket = new DatagramSocket( 46147 );
+        
+        tab1.inicializaEmbarcacao();
+        tab1.Sorteio();
+        
+        tab2.inicializaEmbarcacao();
+        tab2.Sorteio();
+        
         AvisarJogadores();
         } catch (IOException ex) {
 			Logger.getLogger(ProgramServer.class.getName()).log(Level.SEVERE, null, ex);
