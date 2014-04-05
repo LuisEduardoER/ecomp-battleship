@@ -14,6 +14,9 @@ public class Pacote implements Serializable{
     private Object conteudo;
     private TipoPacote tipo;
     
+    public Pacote() {
+    }
+   
     public Pacote(TipoPacote tipo,Object conteudo){
     this.conteudo = conteudo;
     this.tipo = tipo;
