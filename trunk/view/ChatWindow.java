@@ -42,7 +42,6 @@ public class ChatWindow extends JFrame {
     private ArrayList <ImageIcon> iconUtilizados = new ArrayList<ImageIcon>();
     ArrayList <ImageIcon>  emoticonsRecebidos;
     HashMap<String, Object> message = new HashMap<String, Object>();
-    EmoticonView emoticonView;
 
     public JMenu getCompartilharArquivoMenu() {
         return compartilharArquivoMenu;
