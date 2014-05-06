@@ -37,14 +37,13 @@ public class ChatControlador implements ActionListener, MouseInputListener, KeyL
     public ChatC aplicacao1;
     public ChatWindow chatWindow2;
     public ChatC aplicacao2;
-    public ArrayList<Cliente> participantes;
-    public Cliente usuario;
-    private EmoticonView emoticonView;
+    public ArrayList<Jogador> participantes;
+    public Jogador usuario;    
     private int minhasSalas_Chat = 0;
-    private UsuarioControlador usuarioControl;
+    private ClienteControlador usuarioControl;
     private int flag = 0;
 
-    public ChatControlador(Jogador jogador, int porta, UsuarioControlador usuarioControl) {// Cada usuário que loga é um servidor
+    public ChatControlador(Jogador jogador, int porta, ClienteControlador usuarioControl) {// Cada usuário que loga é um servidor
         this.usuario = usuario;
         this.usuarioControl = usuarioControl;
         //Aqui ocorre a execução do servidor como uma Tread
@@ -108,7 +107,7 @@ public class ChatControlador implements ActionListener, MouseInputListener, KeyL
         try {
             Pacote resposta = aplicacao.enviarMsn(pacote);
             if (resposta.getTipo() == TipoPacote.MESSAGEM_RECEBIDA) {
-                chatWindow.setMessageArea("Você " + usuario.getNome(), message);
+                chatWindow.setMessageArea("Você " + usuario.getLogin(), message);
                 chatWindow.clearEnterArea();
             } else if (resposta.getTipo() == TipoPacote.USUARIOS_OFFLINES) {
                 JOptionPane.showMessageDialog(chatWindow, "Nenhum usuario está online");
@@ -140,72 +139,17 @@ public class ChatControlador implements ActionListener, MouseInputListener, KeyL
         } catch (Exception ex) {
 
             System.out.println("NÃO CONSEGUIU LIBERAR A SALA");
-            Logger.getLogger(UsuarioControlador.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteControlador.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("A SALA DE CHAT NAO FOI LIBERADA2");
         return false;
     }
 
-    public void liberarEmoticon() {
+    
 
-        Pacote liberar = new Pacote(TipoPacote.LIBERAR_EMOTICON, "LIBERAR_EMOTICON");
+    
 
-        try {
-
-            Pacote resposta = usuarioControl.aplicacao.enviarMsn(liberar);
-            System.out.println("Liberar emoticon?" + resposta.getTipo());
-        } catch (IOException ex) {
-            Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void getEmoticons(ChatWindow chatWindow) {
-        Pacote pacote = new Pacote(TipoPacote.REQUISITAR_EMOTICON, "REQUISITAR_EMOTICON");
-
-        try {
-
-            Pacote resposta = usuarioControl.aplicacao.enviarMsn(pacote);
-            if (resposta.getTipo() == TipoPacote.TEM_EMOTICON) {
-
-                ArrayList<ImageIcon> imageIcon = (ArrayList<ImageIcon>) resposta.getConteudo();
-
-                emoticonView = new EmoticonView(imageIcon, this);
-            } else if (resposta.getTipo() == TipoPacote.NEGADO_EMOTICON) {
-                JOptionPane.showMessageDialog(chatWindow, "Tela de Emoticon está sendo usada neste momento");
-
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void getCompartilharArquivo(ChatC aplicacao, ChatWindow chatwindow) {
-
-        Pacote pacote = new Pacote(TipoPacote.ENVIAR_ANEXO_CHAT, "Anexo");
-        try {
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.getFile();
-            if (file != null) {
-
-                Pacote resposta = aplicacao.enviarMsn(pacote);
-
-                aplicacao.enviarAnexoChat(file);
-
-                HashMap<String, Object> message = new HashMap<String, Object>();
-
-                message.put("message", "Compartilhou o arquivo " + file.getName());
-                enviarChatMessagem(message, aplicacao, chatwindow);
-            }
-        } catch (Exception e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-    }
+   
 
     public void chatClosed(ChatC aplicacao) {
 
@@ -251,37 +195,7 @@ public class ChatControlador implements ActionListener, MouseInputListener, KeyL
             //Chama metodo de enviar uma menssagem ao chat
             enviarChatMessagem(message, aplicacao2, chatWindow2);
 
-        } else if (emoticonView != null && e.getSource() == emoticonView.getOkButton()) {
-            liberarEmoticon();
-            ImageIcon iconEscolhido = emoticonView.getIconEscolhido();
-            if (flag == 1) {
-                try {
-
-                    chatWindow1.setEmoticonEnterArea(iconEscolhido);
-
-                } catch (BadLocationException ex) {
-
-                    Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else if (flag == 2) {
-                try {
-
-                    chatWindow2.setEmoticonEnterArea(iconEscolhido);
-
-                } catch (BadLocationException ex) {
-
-                    Logger.getLogger(ChatControlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-            emoticonView.dispose();
-
-
-        } else if (emoticonView != null && e.getSource() == emoticonView.getCancelButton()) {
-            liberarEmoticon();
-            emoticonView.dispose();
-
-        } else {
+        }  else {
             JOptionPane.showMessageDialog(null, "ActionEvent HOW??");
 
         }
@@ -290,23 +204,7 @@ public class ChatControlador implements ActionListener, MouseInputListener, KeyL
     @Override
     public void menuSelected(MenuEvent me) {
 
-        if (chatWindow1 != null && me.getSource() == chatWindow1.getEmoticonsMenu()) {
-            flag = 1;
-            getEmoticons(chatWindow1);
-
-        } else if (chatWindow1 != null && me.getSource() == chatWindow1.getCompartilharArquivoMenu()) {
-
-            getCompartilharArquivo(aplicacao1, chatWindow1);
-
-        } else if (chatWindow2 != null && me.getSource() == chatWindow2.getEmoticonsMenu()) {
-            flag = 2;
-            getEmoticons(chatWindow2);
-
-        } else if (chatWindow2 != null && me.getSource() == chatWindow2.getCompartilharArquivoMenu()) {
-
-            getCompartilharArquivo(aplicacao2, chatWindow2);
-
-        }
+        
 
     }
 

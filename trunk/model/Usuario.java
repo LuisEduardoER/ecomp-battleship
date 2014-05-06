@@ -16,6 +16,7 @@ public class Usuario implements Serializable, Comparable<Usuario>{
     private int IDcliente;
     private String login;
     private String senha;
+    private TipoStatus status;
     private int qtd_tiros;
     
     public Usuario(){
@@ -44,9 +45,17 @@ public class Usuario implements Serializable, Comparable<Usuario>{
         return senha;
     }
     
-    @Override
-	public int compareTo(Usuario j) {
-		return this.getLogin().compareTo(j.getLogin());
+    public void setStatus(TipoStatus status){
+		this.status = status;
 	}
+
+    public TipoStatus getStatus(){
+		return this.status;
+    }
+        
+    @Override
+    public int compareTo(Usuario j) {
+		return this.getLogin().compareTo(j.getLogin());
+    }
     
 }
