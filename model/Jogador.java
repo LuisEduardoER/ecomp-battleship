@@ -10,8 +10,8 @@ public class Jogador extends Usuario implements Serializable{
 	private Barco [] barcos;
 	private List pontos;
 	private InetAddress endereco;
-    private int porta;
-    
+        private int porta;
+        
    
         
         
