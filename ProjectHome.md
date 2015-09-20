@@ -1,0 +1,1 @@
+Projeto colaborativo para o desenvolvimento de um jogo de batalha naval. Arquitetura distribuída baseada no paradigma cliente/servidor, inserida no contexto do Módulo Integrador de Concorrência e Conectividade do curso de graduação em Engenharia de Computação, pela Universidade Estadual de Feira de Santana, semestre 2014.1.
